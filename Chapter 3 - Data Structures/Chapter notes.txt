@@ -1,0 +1,156 @@
+page 111; task 3-3:
+
+   "We have seen how dynamic arrays enable arrays to grow while still achieving
+    constant-time amortized performance. This problem concerns extending dynamic
+    arrays to let them both grow and shrink on demand.
+
+    (a) Consider an underflow strategy that cuts the array size in half whenever the
+        array falls below half full. Give an example sequence of insertions and deletions
+        where this strategy gives a bad amortized cost.
+
+    (b) Then, give a better underflow strategy than that suggested above, one that
+        achieves constant amortized cost per deletion."
+
+ - my first idea is to write something like std::vector
+ - have to see how to calculate amortized cost
+
+-----------------------------------------------------------------
+
+page 111; task 3-4:
+
+    "Design a dictionary data structure in which search, insertion, and deletion can
+     all be processed in O(1) time in the worst case. You may assume the set elements
+     are integers drawn from a finite set 1, 2, .., n, and initialization can take O(n) time."
+
+ - I don't know which data structure would allow search in O(1) worst-case time... arrays are O(n), linked lists are O(n) (single and double), trees are O(log n) in worst-case... 
+
+-----------------------------------------------------------------
+
+page 111; task 3-5:
+
+  "Find the overhead fraction (the ratio of data space over total space) for each
+   of the following binary tree implementations on n nodes:
+
+   (a) All nodes store data, two child pointers, and a parent pointer. The data field
+   requires four bytes and each pointer requires four bytes.
+
+   (b) Only leaf nodes store data; internal nodes store two child pointers. The data
+   field requires four bytes and each pointer requires two bytes."
+
+   ----------------------
+
+   Answer for a): 4/16 (4 bytes of data divided by 16 bytes in total) = 1/4 (this is for one node, 		  but applies to trees with 2 nodes, 3 nodes etc.)
+
+   Answer for b): Let's imagine a tree with 3 internal nodes and four leaf nodes. That would yield:
+                  (4*4)/((2*2)*3) = 16/12 = 4/3. Since there will always be one more data node than
+                  there are internal nodes (if we assume the binary tree is complete), our answer is
+                  4/3.
+
+-----------------------------------------------------------------
+
+page 111; task 3-6:
+
+  "Describe how to modify any balanced tree data structure such that search,
+   insert, delete, minimum, and maximum still take O(log n) time each, but successor
+   and predecessor now take O(1) time each. Which operations have to be modified
+   to support this?"
+
+    ---------------------
+
+    Answer: While answering this, I'm constantly thinking about binary search trees, while this                   question asks me about any balanved tree data structure. Will have to think about this                further.
+
+
+-----------------------------------------------------------------
+
+page 111; task 3-7:
+
+   "Suppose you have access to a balanced dictionary data structure, which supports
+    each of the operations search, insert, delete, minimum, maximum, successor, and
+    predecessor in O(log n) time. Explain how to modify the insert and delete operations
+    so they still take O(log n) but now minimum and maximum take O(1) time. (Hint:
+    think in terms of using the abstract dictionary operations, instead of mucking about
+    with pointers and the like.)"
+
+    --------------------
+
+    Answer: Minimum and maximum would have to be on top of the balanced dictonary data structure, 
+            which means that insert and delete would put either maximum or minimum at the top
+            of the data structure. I'm visualizing this as a tree... 2 root nodes maybe? Have to
+            revisit this.
+
+-----------------------------------------------------------------
+
+page 111; task 3-8:
+
+    "Design a data structure to support the following operations:
+	• insert(x,T) – Insert item x into the set T.
+	• delete(k,T) – Delete the kth smallest element from T.
+	• member(x,T) – Return true iff x ? T.
+    All operations must take O(log n) time on an n-element set."
+
+    ------------------
+
+    Answer: I'm thinking of binary search tree (which by default supports insert and member in 
+            O(log n) time; When I would make a class for my binary search tree, I'd also keep track
+            of the number of levels of the tree (my addNode() function would keep track of how many
+            levels I have in the tree). <This previous idea isn't valid...> Gotta think about delete.
+
+-----------------------------------------------------------------
+
+page 111; task 3-9:
+
+    "A concatenate operation takes two sets S1 and S2, where every key in S1
+     is smaller than any key in S2, and merges them together. Give an algorithm to
+     concatenate two binary search trees into one binary search tree. The worst-case
+     running time should be O(h), where h is the maximal height of the two trees."
+
+    -----------------
+
+    Answer: An algorithm would work like Merge function in Merge sort - it would compare the two 
+            roots, put smaller of them on the top of a new binary tree, then place the larger one
+            as the right child of the tree. Then it would proceed down the two binary trees, while
+            deleting the root. I'm not sure if this would run in O(h) time, since it has to
+            pass the two trees. Is it bounded by O(h)?
+
+-----------------------------------------------------------------
+
+page 112; task 3-11:
+
+    "Suppose that we are given a sequence of n values x1, x2, ..., xn and seek to
+     quickly answer repeated queries of the form: given i and j, find the smallest value
+     in xi, . . . , xj .
+
+     (a) Design a data structure that uses O(n2) space and answers queries in O(1)
+         time.
+
+     (b) Design a data structure that uses O(n) space and answers queries in O(log n)
+         time. For partial credit, your data structure can use O(n log n) space and have
+         O(log n) query time.
+
+      -----------------
+
+      Answer for a) : The data structure looks like a square matrix (n x n). The rows represent the 
+                      index from the element from which we are starting, while columns represent the                        number of elements we have added. So the element with the index (0, 0) would be 
+                      a one-element array containing the element with the index 0. If we are starting
+                      from a 3rd element, for example, then (2, 2) would be the maximum of the                              elements on the 0th, 1st and 2nd indexes. This is to illustrate that we first
+                      add the elements to the left of the element we are starting from, then we add
+                      the elements to the right of the element we are starting from.
+
+      Answer for b) : I don't know how to do this... I would need n only to store the values.
+
+--------------------------------------------------------------------
+
+page 112; task 3-12:
+
+     "Suppose you are given an input set S of n numbers, and a black box that if
+      given any sequence of real numbers and an integer k instantly and correctly answers
+      whether there is a subset of input sequence whose sum is exactly k. Show how to
+      use the black box O(n) times to find a subset of S that adds up to k."
+
+     -----------------
+
+     I would first input all the n numbers. Then I'd remove one and input the array without the            element I removed. If the answer is   no, then I'd know that that number is in. If the answer is      yes, then I'd remove another number.  I would stop when I removed each element from the array         that is left over and for removal of each element got a "No". Don't know if this is O(n) though.
+
+--------------------------------------------------------------------
+
+I have more exercises left on pages 112 - 113; Casar shift looks interesting, as well as some interview questions. However, I'll move on and come back to this later, because I've implemented basic data structures in "Think Like a Programmer" book exercises. I find some of these exercises challenging to think about, but implementing some data structures simply feels like it would yield an incremental improvement and that my time is better spent learning algorithms.
