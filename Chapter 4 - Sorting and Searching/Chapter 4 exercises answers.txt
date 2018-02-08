@@ -1,0 +1,164 @@
+4-1. The Grinch is given the job of partitioning 2n players into two teams of n
+players each. Each player has a numerical rating that measures how good he/she is
+at the game. He seeks to divide the players as unfairly as possible, so as to create
+the biggest possible talent imbalance between team A and team B. Show how the
+Grinch can do the job in O(n log n) time.
+
+---------
+
+Answer: The Grinch can sort an array of 2n elements in O(n log n) time using mergesort, then select the first n elements as the first team and the second n elements as the second team.
+
+-----------------------------------------------------------------------------------------------------
+
+4-2. For each of the following problems, give an algorithm that finds the desired
+numbers within the given amount of time. To keep your answers brief, feel free to
+use algorithms from the book as subroutines. For the example, S = {6, 13, 19, 3, 8},
+19 - 3 maximizes the difference, while 8 - 6 minimizes the difference.
+
+(a) Let S be an unsorted array of n integers. Give an algorithm that finds the pair
+x, y ? S that maximizes |x-y|. Your algorithm must run in O(n) worst-case time.
+
+---------
+
+Answer: <Yet to be added>
+
+
+(b) Let S be a sorted array of n integers. Give an algorithm that finds the pair
+x, y ? S that maximizes |x - y|. Your algorithm must run in O(1) worst-case time.
+
+---------
+
+Answer: Take the last element and the first element of the array and subtract them.
+
+(c) Let S be an unsorted array of n integers. Give an algorithm that finds the pair
+x, y ? S that minimizes |x - y|, for x != y. Your algorithm must run in O(n log n)
+worst-case time.
+
+---------
+
+Answer : My answer assumes that the minimum |x - y| is always going to be between adjecent pairs, which makes sense if you think about it. However, a mathematical proof of this eludes me for now.
+
+What I'd do is sort the array with mergesort, and then after that run through the n - 1 elements of the array and compare it with its neighbours, while keeping the minimum and the corresponding x and y stored in variables. Since this loop is O(n) as is not nested in the mergesort, we get the overall complexity of O(n log n). If x == y, then I'd make y the next neighbour, not the adjecent element.
+
+(d) Let S be a sorted array of n integers. Give an algorithm that finds the pair
+x, y ? S that minimizes |x - y|, for x != y. Your algorithm must run in O(n)
+worst-case time.
+
+---------
+
+Answer: Same as answer in (c), without the mergesort part.
+
+-----------------------------------------------------------------------------------------------------
+
+4-3. Take a sequence of 2n real numbers as input. Design an O(n log n) algorithm that
+partitions the numbers into n pairs, with the property that the partition minimizes
+the maximum sum of a pair. For example, say we are given the numbers (1,3,5,9).
+The possible partitions are ((1,3),(5,9)), ((1,5),(3,9)), and ((1,9),(3,5)). The pair
+sums for these partitions are (4,14), (6,12), and (10,8). Thus the third partition has
+10 as its maximum sum, which is the minimum over the three partitions.
+
+---------
+
+Answer: <Yet to be added> Some questions to ponder: (1) How to partition the array and what time complexity it has? That questions will yield the answer, since then it's just comparisons which can be done in O(n) time in my (current) opinion.
+
+-----------------------------------------------------------------------------------------------------
+
+4-4. Assume that we are given n pairs of items as input, where the first item is a
+number and the second item is one of three colors (red, blue, or yellow). Further
+assume that the items are sorted by number. Give an O(n) algorithm to sort the
+items by color (all reds before all blues before all yellows) such that the numbers
+for identical colors stay sorted.
+For example: (1,blue), (3,red), (4,blue), (6,yellow), (9,red) should become (3,red),
+(9,red), (1,blue), (4,blue), (6,yellow).
+
+---------
+
+Answer: Answer eludes me for now.
+
+-----------------------------------------------------------------------------------------------------
+
+4-5. The mode of a set of numbers is the number that occurs most frequently in the
+set. The set (4, 6, 2, 4, 3, 1) has a mode of 4. Give an efficient and correct algorithm
+to compute the mode of a set of n numbers.
+
+---------
+
+Answer: My idea is to create an array of INT_MAX elements, then increment each element as that number pops up and keep track of the maximum and maximum index. Element with maximum index is the mode.
+
+-----------------------------------------------------------------------------------------------------
+
+4-6. Given two sets S1 and S2 (each of size n), and a number x, describe an O(n log n)
+algorithm for finding whether there exists a pair of elements, one from S1 and one
+from S2, that add up to x. (For partial credit, give a theta(n^2) algorithm for this
+problem.)
+
+---------
+
+Answer: Idea for theta(n^2) algorithm - go through every element in S1 and S2 (two for loops) and see if they add up to x. I'll have to think about an O(n log n) algorithm.
+
+-----------------------------------------------------------------------------------------------------
+
+4-7. Outline a reasonable method of solving each of the following problems. Give
+the order of the worst-case complexity of your methods.
+
+(a) You are given a pile of thousands of telephone bills and thousands of checks
+sent in to pay the bills. Find out who did not pay.
+
+---------
+
+Answer: Sort the bills and the checks. See what check is missing. Use date as the value by which to sort.
+
+(b) You are given a list containing the title, author, call number and publisher of
+all the books in a school library and another list of 30 publishers. Find out
+how many of the books in the library were published by each company.
+
+---------
+
+Answer: Have an array representing 30 publishers. Let all elements equal 0 at first. Increment each corresponding array element when the publisher is seen.
+
+(c) You are given all the book checkout cards used in the campus library during
+the past year, each of which contains the name of the person who took out
+the book. Determine how many distinct people checked out at least one book.
+
+---------
+
+Answer: Keep a boolean array of all the students (maybe there's a better way to do this?), initialize it to false. When you see a name on a checkout card, set that name in the boolean array to true. Count all of the true elements.
+
+-----------------------------------------------------------------------------------------------------
+
+4-8. Given a set of S containing n real numbers, and a real number x. We seek an
+algorithm to determine whether two elements of S exist whose sum is exactly x.
+
+(a) Assume that S is unsorted. Give an O(n log n) algorithm for the problem.
+
+---------
+
+Answer: I'd do an algorithm with O(n^2) time. Why? Because let's say I have 0.1 0.2 0.3 and x is 0.4. I have to combine the 1st and the 3rd element. I don't see how combining all the elements with each other can be done in less thatn O(n^2) time.
+
+(b) Assume that S is sorted. Give an O(n) algorithm for the problem.
+
+---------
+
+Answer: Same note as in (a).
+
+-----------------------------------------------------------------------------------------------------
+
+4-9. [4 ] Give an efficient algorithm to compute the union of sets A and B, where
+n = max(|A|, |B|). The output should be an array of distinct elements that form
+the union of the sets, such that they appear more than once in the union.
+
+(a) Assume that A and B are unsorted. Give an O(n log n) algorithm for the
+problem.
+
+---------
+
+Answer: Sort A and B using mergesort. Then put every element of A (in O(n) time; we're traversing A) into the union of A and B (let's call this set C). Then go through set B in O(n) time; while going through it, check if the element is already in the union. If it is, skip adding that element.
+
+(b) Assume that A and B are sorted. Give an O(n) algorithm for the problem.
+
+---------
+
+Answer: Same as (a) except no mergesort.
+
+-----------------------------------------------------------------------------------------------------
+
