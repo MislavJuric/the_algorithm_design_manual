@@ -143,7 +143,7 @@ Answer: Same note as in (a).
 
 -----------------------------------------------------------------------------------------------------
 
-4-9. [4 ] Give an efficient algorithm to compute the union of sets A and B, where
+4-9. Give an efficient algorithm to compute the union of sets A and B, where
 n = max(|A|, |B|). The output should be an array of distinct elements that form
 the union of the sets, such that they appear more than once in the union.
 
@@ -159,6 +159,279 @@ Answer: Sort A and B using mergesort. Then put every element of A (in O(n) time;
 ---------
 
 Answer: Same as (a) except no mergesort.
+
+-----------------------------------------------------------------------------------------------------
+
+4-10. Given a set S of n integers and an integer T, give an O(n^(k-1) log n) algorithm
+to test whether k of the integers in S add up to T.
+
+---------
+
+Answer : Approximating the time complexity for this task is hard for me. My idea is to extract every number and combine it with the remaining (k - 1) numbers in every possible combination, but I think that would lead me to exponential time complexity.
+
+-----------------------------------------------------------------------------------------------------
+
+4-11. Design an O(n) algorithm that, given a list of n elements, finds all the elements
+that appear more than n/2 times in the list. Then, design an O(n) algorithm that,
+given a list of n elements, finds all the elements that appear more than n/4 times.
+
+----------
+
+Answer: I have an idea which would give me O(n^2) time complexity - every time I encounter a new element, I add it to a linked list. Then I'd traverse the linked list every time I traverse the n elements and keep track of how many times I've seen that element. This is O(n^2) because in every iteration of the traversal of the n elements I'd have to check the linked list. Other ideas I have also boil down to O(n^2) time complexity... Have to think about this one.
+
+-----------------------------------------------------------------------------------------------------
+
+4-12. Devise an algorithm for finding the k smallest elements of an unsorted set of n
+integers in O(n + k log n).
+
+----------
+
+Answer: Initial heap can be constructed in O(n log n) and deleting a root, then "heapifying" the heap again takes O(log n) time. Thus we have O(n log n + k log n) time complexity, which is NOT O(n + k log n)... What did I do wrong here?
+
+-----------------------------------------------------------------------------------------------------
+
+4-13. You wish to store a set of n numbers in either a max-heap or a sorted array.
+For each application below, state which data structure is better, or if it does not
+matter. Explain your answers.
+
+(a) Want to find the maximum element quickly.
+
+----------
+
+Answer: Maxheap. It always keeps the maximum at the top.
+
+(b) Want to be able to delete an element quickly.
+
+----------
+
+Answer: Heap. "Heapify" takes O(log n) time (time to build a new heap without the root that's been extracted).
+
+(c) Want to be able to form the structure quickly.
+
+----------
+
+Answer: Array.
+
+(d) Want to find the minimum element quickly.
+
+----------
+
+Answer: Minheap. Same reasoning as (a).
+
+-----------------------------------------------------------------------------------------------------
+
+4-14. Give an O(n log k)-time algorithm that merges k sorted lists with a total of n
+elements into one sorted list. (Hint: use a heap to speed up the elementary O(kn)-
+time algorithm).
+
+----------
+
+Answer: I don't know this one yet.
+
+-----------------------------------------------------------------------------------------------------
+
+4-15. (a) Give an efficient algorithm to find the second-largest key among n keys.
+You can do better than 2n - 3 comparisons.
+
+---------
+
+Answer: I would make a max heap, then I'd pop the root and heapify again. The new root is my answer. This comparsion algorithm is pretty convulted for me so I'd do it this way.
+
+(b) Then, give an efficient algorithm to find the third-largest key among n keys.
+How many key comparisons does your algorithm do in the worst case? Must your
+algorithm determine which key is largest and second-largest in the process?
+
+---------
+
+Answer: Same as in (a), except that I take the root 2 times.
+
+-----------------------------------------------------------------------------------------------------
+
+4-16. Use the partitioning idea of quicksort to give an algorithm that finds the median
+element of an array of n integers in expected O(n) time. (Hint: must you look at
+both sides of the partition?)
+
+---------
+
+Answer: I don't know this one yet. My idea is to sort the array using quicksort, then access the floor(n/2) element, but that would take O(n log n) expected time since quicksort sorts in that time bound.
+
+-----------------------------------------------------------------------------------------------------
+
+4-17. The median of a set of n values is the ceil(n/2)th smallest value.
+
+(a) Suppose quicksort always pivoted on the median of the current sub-array. How
+many comparisons would Quicksort make then in the worst case?
+
+---------
+
+Answer: In the first call, it would make 2 * ceil(n/2) = n comparsions, because it would compare each of the n/2 subarray elements with the other n/2 subarray elements. Then the median of the original array would be in its proper place. However, this assumes we pick the median element right off the bat. Maybe I'm misinterpreting the task...
+
+(b) Suppose quicksort were always to pivot on the ceil(n/3)th smallest value of the
+current sub-array. How many comparisons would be made then in the worst
+case?
+
+---------
+
+Answer: Not sure. When I clear my understading of (a), I'll come back to this.
+
+-----------------------------------------------------------------------------------------------------
+
+4-18. Suppose an array A consists of n elements, each of which is red, white, or blue.
+We seek to sort the elements so that all the reds come before all the whites, which
+come before all the blues. The only operation permitted on the keys are
+• Examine(A,i) – report the color of the ith element of A.
+• Swap(A,i,j) – swap the ith element of A with the jth element.
+Find a correct and efficient algorithm for red-white-blue sorting. There is a lineartime
+solution.
+
+---------
+
+Answer: An algorithm that looks something like this:
+
+int lastRed = -1;
+int lastWhite = -1;
+int lastBlue = -1;
+for (int i = 0; i < n; i++)
+{
+	Color c = Examine(A, i);
+	if (c == "Red")
+	{
+		lastRed = i;
+	}	
+	if (c == "White")
+	{
+		lastWhite = i;
+	}
+	if (c == "Blue")
+	{
+		lastBlue = c;
+	}
+	if (lastRed > lastWhite)
+	{
+		Swap(A, lastWhite, lastRed);
+		int temp = lastWhite;
+		lastWhite = lastRed;
+		lastRed = temp;
+	}
+	if (lastWhite > lastBlue)
+	{
+		Swap(A, lastWhite, lastBlue);
+		int temp = lastWhite;
+		lastWhite = lastBlue;
+		lastBlue = temp;
+	}
+	if (lastRed > lastBlue)
+	{
+		Swap(A, lastWhite, lastBlue);
+		int temp = lastBlue;
+		lastBlue = lastRed;
+		lastRed = temp;
+	}
+}
+
+So the idea is to remember the indicies of last seen colors and then swap according to those. This is an O(n) algortihm.
+
+-----------------------------------------------------------------------------------------------------
+
+4-20. Give an efficient algorithm to rearrange an array of n keys so that all the
+negative keys precede all the nonnegative keys. Your algorithm must be in-place,
+meaning you cannot allocate another array to temporarily hold the items. How fast
+is your algorithm?
+
+---------
+
+Answer: The algorithm would look something like this:
+
+// assume my array name is A
+int backIndex = n - 1;
+for (int frontIndex = 0; frontIndex <= (n / 2); frontIndex++)
+{
+	if ((A[frontIndex] > 0) && (A[backIndex] < 0))
+	{
+		int temp = A[frontIndex];
+		A[frontIndex] = A[backIndex];
+		A[backIndex] = temp;
+	}
+	backIndex--;
+}
+
+This is a rough sketch of the algorithm. I would expect bugs regarding 2 things:
+
+ - array indicies (frontIndex going to (n / 2))
+ - the complicated if condition
+
+-----------------------------------------------------------------------------------------------------
+
+4-30. A company database consists of 10,000 sorted names, 40% of whom are known as
+good customers and who together account for 60% of the accesses to the database.
+
+There are two data structure options to consider for representing the database:
+
+• Put all the names in a single array and use binary search.
+• Put the good customers in one array and the rest of them in a second array.
+
+Only if we do not find the query name on a binary search of the first array do
+we do a binary search of the second array.
+Demonstrate which option gives better expected performance. Does this change
+if linear search on an unsorted array is used instead of binary search for both
+options?
+
+---------
+
+Answer: Since log 10000 = 5 and log 4000 = 3.6, I would recommend keeping all names in a single array. If we were to use a linear search, then separating the arrays would be a good idea, since probabilty then works in our favour. 
+
+-----------------------------------------------------------------------------------------------------
+
+4-31. Suppose you are given an array A of n sorted numbers that has been circularly
+shifted k positions to the right. For example, {35, 42, 5, 15, 27, 29} is a sorted array
+that has been circularly shifted k = 2 positions, while {27, 29, 35, 42, 5, 15} has been
+shifted k = 4 positions.
+
+• Suppose you know what k is. Give an O(1) algorithm to find the largest
+number in A.
+
+----------
+
+Answer: I would go (k - 1) places from the 0th index and get the largest element.
+
+• Suppose you do not know what k is. Give an O(lg n) algorithm to find the
+largest number in A. For partial credit, you may give an O(n) algorithm.
+
+----------
+
+Answer: I don't know this one yet.
+
+-----------------------------------------------------------------------------------------------------
+
+4-32. Consider the numerical 20 Questions game. In this game, Player 1 thinks of a
+number in the range 1 to n. Player 2 has to figure out this number by asking the
+fewest number of true/false questions. Assume that nobody cheats.
+
+(a) What is an optimal strategy if n in known?
+
+----------
+
+Answer: Binary search.
+
+(b) What is a good strategy is n is not known?
+
+----------
+
+Answer: First guess randomly; second guess then depends on the answer from the first guess. Not sure if this is the best strategy to go about this though.
+
+-----------------------------------------------------------------------------------------------------
+
+4-36. Consider an n×n array A containing integer elements (positive, negative, and
+zero). Assume that the elements in each row of A are in strictly increasing order,
+and the elements of each column of A are in strictly decreasing order. (Hence there
+cannot be two zeroes in the same row or the same column.) Describe an efficient
+algorithm that counts the number of occurrences of the element 0 in A. Analyze its
+running time.
+
+-----------
+
+Answer: Since each row is sorted in increasing order and each column in decreasing order, I'd have to check the lefmost column (since it is the beginning of all rows) and the last row (since it contains the smallest element of all columns). I don't really understand the sentence "Hence there
+cannot be two zeroes in the same row or the same column.". What if there are two 0's in the same row? Anyhow, taking that sentence as the assumption, then we check the first column in O(n) time and we check the last row in O(n) time, yielding an O(n) algorithm.
 
 -----------------------------------------------------------------------------------------------------
 

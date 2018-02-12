@@ -1,1 +1,2 @@
 - have to implement the sorting algorithms (add the missing functions etc.)
+- revisit exercise 4.19. , 4.21. - 4.29., 4.33 - 4.35 page 153. - 154.
