@@ -29,9 +29,9 @@ int pq_young_child(int n)
 // ------------------- I wrote this -------------------
 void pq_swap(priority_queue* q, int p1, int p2)
 {
-    item_type temp = q[p1]; // error: cannot convert 'priority_queue' to 'int' in initialization
-    q[p1] = q[p2];
-    q[p2] = temp;
+    item_type temp = q->q[p1];
+    q->q[p1] = q->q[p2];
+    q->q[p2] = temp;
 }
 // ------------------- I wrote this -------------------
 
@@ -45,7 +45,7 @@ void bubble_up(priority_queue *q, int p) // minheap implementacija
     }
 }
 
-pq_insert(priority_queue *q, item_type x)
+void pq_insert(priority_queue *q, item_type x)
 {
     if (q->n >= PQ_SIZE)
     {
@@ -59,12 +59,12 @@ pq_insert(priority_queue *q, item_type x)
     }
 }
 
-pq_init(priority_queue *q)
+void pq_init(priority_queue *q)
 {
     q->n = 0;
 }
 
-make_heap(priority_queue *q, item_type s[], int n) // item_type deklarirati
+void make_heap(priority_queue *q, item_type s[], int n)
 {
     int i; /* counter */
     pq_init(q);
@@ -72,7 +72,7 @@ make_heap(priority_queue *q, item_type s[], int n) // item_type deklarirati
     pq_insert(q, s[i]);
 }
 
-bubble_down(priority_queue *q, int p)
+void bubble_down(priority_queue *q, int p)
 {
     int c; /* child index */
     int i; /* counter */
@@ -112,7 +112,7 @@ item_type extract_min(priority_queue *q)
     return(min);
 }
 
-heapsort(item_type s[], int n)
+void heapsort(item_type s[], int n)
 {
     int i; /* counters */
     priority_queue q; /* heap for heapsort */
@@ -125,6 +125,13 @@ heapsort(item_type s[], int n)
 
 int main()
 {
-
+    priority_queue q;
+    int arr[10] = {3, 5, 6, 9, 4, 1, 2, 7, 8, 10};
+    heapsort(arr, 10); // hardcoding 10 here, just for test purposes
+    for (int i = 0; i < 10; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
     return 0;
 }

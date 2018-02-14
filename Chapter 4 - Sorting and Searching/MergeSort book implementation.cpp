@@ -2,6 +2,52 @@
 
 using namespace std;
 
+// this doesn't sort right; probably because of my faulty queue implementation... have to revisit this
+
+//------------------------- code I wrote ------------------------------
+
+#define item_type int
+#define QUEUE_SIZE 10
+
+struct queue
+{
+    item_type array[QUEUE_SIZE];
+    int queue_size;
+};
+
+void init_queue(queue* q)
+{
+    q->queue_size = 0;
+}
+
+void enqueue(queue* q, item_type item)
+{
+    q->array[q->queue_size] = item;
+    q->queue_size++;
+}
+
+bool empty_queue(queue* q)
+{
+    if (q->queue_size == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+item_type headq(queue* q)
+{
+    return q->array[(q->queue_size) - 1];
+}
+
+item_type dequeue(queue* q)
+{
+    q->queue_size--;
+    return q->array[q->queue_size];
+}
+
+//------------------------- code I wrote ------------------------------
+
 void merge(item_type s[], int low, int middle, int high)
 {
     int i; /* counter */
@@ -39,6 +85,11 @@ void mergesort(item_type s[], int low, int high)
 
 int main()
 {
-
+    item_type A[10] {2, 6, 7, 9, 10, 4, 5, 8, 1, 3};
+    mergesort(A, 0, 9);
+    for (int i = 0; i < 10; i++)
+    {
+        cout << A[i] << " ";
+    }
     return 0;
 }
