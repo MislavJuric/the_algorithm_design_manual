@@ -1,0 +1,30 @@
+5-8. Present correct and efficient algorithms to convert an undirected graph G between
+the following graph data structures. You must give the time complexity of
+each algorithm, assuming n vertices and m edges.
+
+(a) Convert from an adjacency matrix to adjacency lists.
+
+--------------------
+
+Answer: Adjecency matrix contains the entry 1 for vertices that are neighbouring and 0 otherwise. My algorithm would work in theta(n^2) time because it would go through all of the matrix, find the adjecent vertex and then push that vertex onto the list for the vertex currently being examined.
+
+--------------------
+
+(b) Convert from an adjacency list to an incidence matrix. An incidence matrix
+M has a row for each vertex and a column for each edge, such that M[i, j] = 1
+if vertex i is part of edge j, otherwise M[i, j] = 0.
+
+--------------------
+
+Answer: Go through all of the adjecency list entries and depending on which vertex we're on (that's our i), see which vertex it is adjecent to (via the adjecency list; that's our j) and place 1 in both M[i, j] and M[j, i]. Because we traverse the entire adjeceny list, we have theta(n^2) time complexity.
+
+--------------------
+
+(c) Convert from an incidence matrix to adjacency lists.
+
+--------------------
+
+Answer: Go through the adjecency matrix row by row and if there is a 1, place the j-th node in the i-th adjecency list and place the i-th node in the j-th adjecency list.
+
+--------------------
+
