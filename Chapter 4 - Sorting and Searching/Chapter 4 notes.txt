@@ -1,3 +1,3 @@
 - revisit exercise 4.19. , 4.21. - 4.29., 4.33 - 4.35 page 153. - 154.
-- revisit mergesort implementation and debug it
+- revisit mergesort implementation and debug it +
 - implement insertion sort
